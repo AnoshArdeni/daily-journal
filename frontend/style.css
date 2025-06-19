@@ -39,3 +39,58 @@ button {
   border: none;
   border-radius: 5px;
 }
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.popup button {
+  margin-top: 15px;
+  background-color: #5d9cec;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.top-left-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #5d9cec;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.top-left-button:hover {
+  background-color: #4a8ad4;
+}

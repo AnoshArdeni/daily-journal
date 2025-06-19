@@ -3,11 +3,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("entry-form");
   form.addEventListener("submit", function (e) {
-    e.preventDefault(); 
+    e.preventDefault();
     addEntry();
+  });
+
+  // Load daily quote on page load
+  fetchQuote();
+
+  // Close popup
+  document.getElementById("close-popup").addEventListener("click", () => {
+    document.getElementById("quote-popup").classList.add("hidden");
+  });
+
+  // Show quote popup on button click
+  document.getElementById("show-quote-btn").addEventListener("click", () => {
+    document.getElementById("quote-popup").classList.remove("hidden");
   });
 });
 
+
+  function fetchQuote() {
+    fetch("https://zenquotes.io/api/today")
+    .then(res => res.json())
+    .then(data => {
+      const quote = data[0].q + " — " + data[0].a;
+      document.getElementById("quote-text").textContent = quote;
+      document.getElementById("quote-popup").classList.remove("hidden");
+    })
+    .catch(err => {
+      console.error("Failed to load quote:", err);
+    });
+  }
 
 function fetchEntries() {
   fetch("http://127.0.0.1:5000/entries")
@@ -67,4 +93,9 @@ function addEntry() {
     .catch(err => {
       console.error("Error adding entry:", err);
     });
+
+
+
 }
+
+ 
