@@ -8,10 +8,13 @@ CORS(app)
 
 initialize_db()
 
+# Initialize the database and create the journal_entries table if it doesn't exist
 @app.route('/')
 def home():
     return jsonify({"message": "Welcome to the Daily Journal API!"})
 
+# Endpoint to get all journal entries
+# Returns a list of all entries in descending order by creation date
 @app.route('/entries', methods=['GET'])
 def get_entries():
     conn = get_db_connection()
@@ -27,7 +30,8 @@ def get_entries():
     print(f"Fetched {len(entries)} entries.")
     return jsonify([dict(entry) for entry in entries]), 200
 
-
+# Endpoint to create a new journal entry
+# Expects a JSON payload with 'date', 'mood', and 'entry' fields
 @app.route('/entries', methods=['POST'])
 def create_entry():
     data = request.get_json()
