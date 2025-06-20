@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load daily quote on page load
   fetchQuote();
 
+
   // Close popup
   document.getElementById("close-popup").addEventListener("click", () => {
     document.getElementById("quote-popup").classList.add("hidden");
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("http://127.0.0.1:5000/api/quote")
     .then(res => res.json())
     .then(data => {
-      const quote = data[0].q + " — " + data[0].a;
+      const quote = data.quote;
       document.getElementById("quote-text").textContent = quote;
       document.getElementById("quote-popup").classList.remove("hidden");
     })

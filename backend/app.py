@@ -74,6 +74,19 @@ def get_quote():
             "author": "Walt Whitman"
         }), 200
 
+# Endpoint to get a specific journal entry by date
+@app.route('/api/journal/<date>', methods=['GET'])
+def get_entry_by_date(date):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM journal_entries WHERE date = ?', (date,))
+    entries = cursor.fetchall()
+    conn.close()
+    if entries:
+        return jsonify([dict(e) for e in entries]), 200
+    else:
+        return jsonify({"error": "No entries found for that date"}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
