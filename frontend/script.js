@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     addEntry();
   });
-  
-
 
   // Close popup
   document.getElementById("close-popup").addEventListener("click", () => {
@@ -17,6 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Show quote popup on button click
   document.getElementById("show-quote-btn").addEventListener("click", () => {
     fetchQuote();
+  });
+
+  // Show all entries when "Show All" button is clicked
+  document.getElementById("clear-filter").addEventListener("click", () => {
+    document.getElementById("filter-date").value = "";
+    fetchEntries();
   });
 });
 
@@ -36,6 +40,7 @@ document.getElementById("filter-form").addEventListener("submit", function (e) {
   fetch(`http://127.0.0.1:5000/api/journal/${selectedDate}`)
     .then(res => {
       if (!res.ok) throw new Error("No entry found for that date.");
+
       return res.json();
     })
     .then(entry => {

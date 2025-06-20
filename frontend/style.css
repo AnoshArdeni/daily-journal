@@ -1,43 +1,108 @@
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+  transition: background 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
+  font-family: 'Inter', Arial, sans-serif;
+  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
   margin: 0;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .container {
   max-width: 700px;
-  margin: auto;
-  background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 40px auto;
+  background: rgba(255,255,255,0.95);
+  padding: 40px 32px;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 120, 200, 0.12);
+  border: 1px solid #e3e8f0;
 }
 
 h1, h2 {
-  color: #333;
+  color: #2a3b5d;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-top: 24px;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
-input, textarea {
-  padding: 10px;
+input, textarea, select {
+  padding: 12px;
   font-size: 1rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 7px;
+  background: #f8fafc;
+  transition: border 0.2s;
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border: 1.5px solid #5d9cec;
+  background: #fff;
 }
 
 button {
-  padding: 10px;
-  font-weight: bold;
+  padding: 12px 0;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  background-color: #5d9cec;
+  background: linear-gradient(90deg, #5d9cec 60%, #4a8ad4 100%);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(93,156,236,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #4a8ad4 60%, #5d9cec 100%);
+  box-shadow: 0 4px 16px rgba(93,156,236,0.16);
+}
+
+.entry {
+  background: #f4f8fb;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(93,156,236,0.06);
+  border-left: 4px solid #5d9cec;
+  transition: box-shadow 0.2s;
+}
+
+.entry:hover {
+  box-shadow: 0 4px 16px rgba(93,156,236,0.13);
+}
+
+.entry h3 {
+  margin: 0 0 8px 0;
+  color: #3b4a6b;
+  font-size: 1.15rem;
+}
+
+.entry p {
+  margin: 4px 0;
+  color: #4a5a7a;
+  font-size: 1rem;
 }
 
 .popup {
@@ -55,11 +120,12 @@ button {
 
 .popup-content {
   background: #fff;
-  padding: 30px;
-  border-radius: 10px;
+  padding: 36px 28px;
+  border-radius: 14px;
   text-align: center;
-  max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(60, 120, 200, 0.18);
+  border: 1px solid #e3e8f0;
 }
 
 .popup button {
@@ -76,21 +142,33 @@ button {
   display: none;
 }
 
-
 .top-left-button {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: #5d9cec;
+  top: 24px;
+  left: 24px;
+  background: linear-gradient(90deg, #5d9cec 60%, #4a8ad4 100%);
   color: white;
   border: none;
-  padding: 10px 14px;
-  font-size: 14px;
-  border-radius: 6px;
+  padding: 12px 18px;
+  font-size: 15px;
+  border-radius: 8px;
   cursor: pointer;
   z-index: 1000;
+  box-shadow: 0 2px 8px rgba(93,156,236,0.10);
+  transition: background 0.2s;
 }
 
 .top-left-button:hover {
-  background-color: #4a8ad4;
+  background: linear-gradient(90deg, #4a8ad4 60%, #5d9cec 100%);
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 18px 6px;
+    border-radius: 0;
+  }
+  .popup-content {
+    padding: 18px 6px;
+    border-radius: 0;
+  }
 }
