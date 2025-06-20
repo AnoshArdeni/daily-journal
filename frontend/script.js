@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function fetchQuote() {
-    fetch("https://zenquotes.io/api/today")
+    fetch("http://127.0.0.1:5000/api/quote")
     .then(res => res.json())
     .then(data => {
       const quote = data[0].q + " — " + data[0].a;
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 function fetchEntries() {
-  fetch("http://127.0.0.1:5000/entries")
+  fetch("http://127.0.0.1:5000/api/journal")
     .then(res => res.json())
     .then(data => {
       const container = document.getElementById("entries-container");
@@ -75,7 +75,7 @@ function addEntry() {
     return;
   }
 
-  fetch("http://127.0.0.1:5000/entries", {
+  fetch("http://127.0.0.1:5000/api/journal", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

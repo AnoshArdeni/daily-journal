@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from database import get_db_connection, initialize_db
-
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -15,7 +15,7 @@ def home():
 
 # Endpoint to get all journal entries
 # Returns a list of all entries in descending order by creation date
-@app.route('/entries', methods=['GET'])
+@app.route('/api/journal', methods=['GET'])
 def get_entries():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -32,7 +32,7 @@ def get_entries():
 
 # Endpoint to create a new journal entry
 # Expects a JSON payload with 'date', 'mood', and 'entry' fields
-@app.route('/entries', methods=['POST'])
+@app.route('/api/journal', methods=['POST'])
 def create_entry():
     data = request.get_json()
     if not data or 'date' not in data or 'mood' not in data or 'entry' not in data:
@@ -54,6 +54,26 @@ def create_entry():
 
     return jsonify({"message": "Entry created successfully",
                     "date" : date, "mood" : mood, "entry" : entry}), 201
+
+
+@app.route('/api/quote', methods=['GET'])
+def get_quote():
+    try:
+        response = requests.get('https://api.quotable.io/random', timeout=5)
+        response.raise_for_status()
+        quote_data = response.json()
+        return jsonify({
+            "quote": quote_data.get("content"),
+            "author": quote_data.get("author")
+        }), 200
+    except requests.RequestException:
+        # fallback quote if the API call fails
+        print("Failed to fetch quote from API, using fallback quote.")
+        return jsonify({
+            "quote": "Keep your face always toward the sunshine—and shadows will fall behind you.",
+            "author": "Walt Whitman"
+        }), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
