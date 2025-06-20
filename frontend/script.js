@@ -6,9 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     addEntry();
   });
-
-  // Load daily quote on page load
-  fetchQuote();
+  
 
 
   // Close popup
@@ -18,9 +16,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show quote popup on button click
   document.getElementById("show-quote-btn").addEventListener("click", () => {
-    document.getElementById("quote-popup").classList.remove("hidden");
+    fetchQuote();
   });
 });
+
+
+
+
+// Filter entries by date
+document.getElementById("filter-form").addEventListener("submit", function (e) {
+  e.preventDefault(); // Prevent page reload
+
+  const selectedDate = document.getElementById("filter-date").value;
+  if (!selectedDate) {
+    alert("Please select a date.");
+    return;
+  }
+
+  fetch(`http://127.0.0.1:5000/api/journal/${selectedDate}`)
+    .then(res => {
+      if (!res.ok) throw new Error("No entry found for that date.");
+      return res.json();
+    })
+    .then(entry => {
+      console.log(entry); // See the structure
+      const entriesSection = document.getElementById("entries-container");
+      if (!entry || (Array.isArray(entry) && entry.length === 0)) {
+        entriesSection.innerHTML = `<p style="color:red;">No entry found for that date.</p>`;
+        return;
+      }
+      const entriesArray = Array.isArray(entry) ? entry : [entry];
+      entriesSection.innerHTML = entriesArray.map(e => `
+        <div class="entry">
+          <h3>Entry for ${e.date}</h3>
+          <p><strong>Mood:</strong> ${e.mood || "N/A"}</p>
+          <p>${e.entry}</p>
+          <hr/>
+        </div>
+      `).join('');
+    })
+    .catch(err => {
+      const entriesSection = document.getElementById("entries");
+      entriesSection.innerHTML = `<p style="color:red;">${err.message}</p>`;
+    });
+});
+
 
 
   function fetchQuote() {
@@ -99,4 +139,3 @@ function addEntry() {
 
 }
 
- 
