@@ -88,6 +88,21 @@ def get_entry_by_date(date):
         return jsonify({"error": "No entries found for that date"}), 404
 
 
+# Endpoint to delete a journal entry by ID
+@app.route('/api/journal/<int:id>', methods=['DELETE'])
+def delete_entry(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM journal_entries WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+
+    if cursor.rowcount == 0:
+        return jsonify({"error": "Entry not found"}), 404
+
+    return jsonify({"message": "Entry deleted successfully"}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

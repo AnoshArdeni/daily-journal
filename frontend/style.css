@@ -62,20 +62,20 @@ input:focus, textarea:focus, select:focus {
 }
 
 button {
-  padding: 12px 0;
+  padding: 12px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  background: linear-gradient(90deg, #5d9cec 60%, #4a8ad4 100%);
+  background: #5d9cec;
   color: white;
   border: none;
   border-radius: 7px;
   box-shadow: 0 2px 8px rgba(93,156,236,0.08);
-  transition: background 0.2s, box-shadow 0.2s;
+  transition: background 0.3s, box-shadow 0.2s;
 }
 
 button:hover {
-  background: linear-gradient(90deg, #4a8ad4 60%, #5d9cec 100%);
+  background: #416da6;
   box-shadow: 0 4px 16px rgba(93,156,236,0.16);
 }
 
@@ -128,15 +128,6 @@ button:hover {
   border: 1px solid #e3e8f0;
 }
 
-.popup button {
-  margin-top: 15px;
-  background-color: #5d9cec;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
 .hidden {
   display: none;
@@ -146,21 +137,15 @@ button:hover {
   position: fixed;
   top: 24px;
   left: 24px;
-  background: linear-gradient(90deg, #5d9cec 60%, #4a8ad4 100%);
-  color: white;
-  border: none;
   padding: 12px 18px;
   font-size: 15px;
   border-radius: 8px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 888;
   box-shadow: 0 2px 8px rgba(93,156,236,0.10);
   transition: background 0.2s;
 }
 
-.top-left-button:hover {
-  background: linear-gradient(90deg, #4a8ad4 60%, #5d9cec 100%);
-}
 
 @media (max-width: 600px) {
   .container {
