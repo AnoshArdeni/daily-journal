@@ -36,7 +36,7 @@ document.getElementById("filter-form").addEventListener("submit", function (e) {
     alert("Please select a date.");
     return;
   }
-
+  // Fetch entries for the selected date
   fetch(`http://127.0.0.1:5000/api/journal/${selectedDate}`)
     .then(res => {
       if (!res.ok) throw new Error("No entry found for that date.");
@@ -67,7 +67,7 @@ document.getElementById("filter-form").addEventListener("submit", function (e) {
 });
 
 
-
+  // Function to fetch a random quote from the API
   function fetchQuote() {
     fetch("http://127.0.0.1:5000/api/quote")
     .then(res => res.json())
@@ -81,34 +81,65 @@ document.getElementById("filter-form").addEventListener("submit", function (e) {
     });
   }
 
+
+
+// Function to fetch all journal entries
+// This will be called on page load and after adding/deleting entries
 function fetchEntries() {
   fetch("http://127.0.0.1:5000/api/journal")
     .then(res => res.json())
-    .then(data => {
+    .then(entries => {
       const container = document.getElementById("entries-container");
       container.innerHTML = "";
 
-      if (data.length === 0) {
-        container.textContent = "No journal entries yet.";
-        return;
-      }
-
-      data.forEach(entry => {
-        const div = document.createElement("div");
-        div.className = "entry";
-        div.innerHTML = `
+      entries.forEach(entry => {
+        const card = document.createElement("div");
+        card.className = "entry-card";
+        card.dataset.id = entry.id;
+        
+        card.innerHTML = `
           <h3>${entry.date}</h3>
           <p><strong>Mood:</strong> ${entry.mood || "N/A"}</p>
           <p>${entry.entry}</p>
-          <hr/>
+          <button class="delete-btn hidden">Delete</button>
         `;
-        container.appendChild(div);
+
+        // Click to toggle delete button visibility
+        card.addEventListener("click", () => {
+          const btn = card.querySelector(".delete-btn");
+          btn.classList.toggle("hidden");
+        });
+
+        // Handle delete
+        card.querySelector(".delete-btn").addEventListener("click", (e) => {
+          e.stopPropagation(); // Prevent card click
+          deleteEntry(entry.id);
+        });
+
+        container.appendChild(card);
       });
-    })
-    .catch(err => {
-      console.error("Error fetching entries:", err);
     });
 }
+
+
+// Function to delete an entry by ID
+function deleteEntry(id) {
+  fetch(`http://127.0.0.1:5000/api/journal/${id}`, {
+    method: "DELETE"
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to delete entry");
+      return res.json();
+    })
+    .then(() => {
+      fetchEntries(); // Refresh entries list
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error deleting entry.");
+    });
+}
+
 
 
 function addEntry() {

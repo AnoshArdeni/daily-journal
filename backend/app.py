@@ -55,18 +55,23 @@ def create_entry():
     return jsonify({"message": "Entry created successfully",
                     "date" : date, "mood" : mood, "entry" : entry}), 201
 
-
+# Endpoint to get a random quote
+# Fetches a random quote from an external API and returns it
 @app.route('/api/quote', methods=['GET'])
 def get_quote():
     try:
-        response = requests.get('https://api.quotable.io/random', timeout=5)
+        response = requests.get('https://zenquotes.io/api/today', timeout=5)
         response.raise_for_status()
         quote_data = response.json()
-        return jsonify({
-            "quote": quote_data.get("content"),
-            "author": quote_data.get("author")
-        }), 200
-    except requests.RequestException:
+        if isinstance(quote_data, list) and len(quote_data) > 0:
+            quote_obj = quote_data[0]
+            return jsonify({
+                "quote": quote_obj.get("q"),
+                "author": quote_obj.get("a")
+            }), 200
+        else:
+            raise ValueError("Unexpected quote API response format")
+    except Exception:
         # fallback quote if the API call fails
         print("Failed to fetch quote from API, using fallback quote.")
         return jsonify({
