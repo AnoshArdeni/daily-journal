@@ -19,7 +19,7 @@ A full-stack journaling web app to log your mood and thoughts, view past entries
 - **Version Control:** Git + GitHub
 
 ## 🗂 Project Structure
-
+```
 daily-journal/
 ├── backend/
 │ ├── app.py
@@ -33,7 +33,7 @@ daily-journal/
 │ └── assets/
 ├── README.md
 └── .gitignore
-
+```
 
 ## 🔌 API Endpoints
 
@@ -62,5 +62,14 @@ pip install -r requirements.txt
 python app.py
 ```
 
+
+
+
+
 ### 3. Setup Frontend
 Open frontend/index.html in a browser. You can use the Live Server extension in VSCode for automatic reloading.
+
+## Author
+- Anosh Ardeni
+- GitHub: AnoshArdeni
+
